@@ -1,5 +1,6 @@
 import re
 import json
+import subprocess
 
 def validate_group_name(group_name):
   """Validates the group name."""
@@ -91,6 +92,13 @@ def main():
       break
 
   final_text = "--lob ma --ignore_bypass --create_entity_if_not_exists --local --data '{}'".format(json.dumps(data))
+
+  process = subprocess.Popen(
+      "pbcopy", env={"LANG": "en_US.UTF-8"}, stdin=subprocess.PIPE
+  )
+  process.communicate(final_text.encode("utf-8"))
+  print("Formatted string copied to clipboard!")
+
   print(final_text)
 
 if __name__ == "__main__":
